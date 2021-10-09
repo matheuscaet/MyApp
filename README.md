@@ -8,9 +8,9 @@
  - mongoose
  - passport
 
-## Design Framework
+## Frontend (React JS)
 
- - bootstrap
+ - https://github.com/matheuscaet/ReactApp
 
 ## Database
 
