@@ -44,21 +44,36 @@ router.post("/item", (req, res) => {
 
 router.post("/adduser", (req, res) => {
 
-    const NewUser = mongoose.model("users");
+    const us = req.body[0].user;
+    const psw = req.body[0].password;
 
-    console.log(req.body[0])
+    User.findOne({user: us}).then((user) => { 
+        
+        
+        if(!user){
+            const NewUser = mongoose.model("users");
 
-    new NewUser ({
-        user: req.body[0].user,
-        password: req.body[0].password
+            new NewUser ({
+            user: req.body[0].user,
+            password: req.body[0].password
 
 
-        }).save(function(err, obj) {
-            if (err)
-                res.send(err);
+            }).save(function(err, obj) {
+                if (err){
+                    res.send(err);
+                } else{
+                    res.json({ message: 'Cadastro Criado Com Sucesso!', type:0 });
+                }
+            });
+        
+        }
+        if(user){
+            res.json({ message: 'Usuário Já existente, Por favor insira outro!', type:1});
+        }
+        
+    })
+
     
-            res.json({ message: 'Usuário Criado Com Sucesso!', user: obj.user });
-        });
 });
 
 router.post("/lognow", (req, res) => {
